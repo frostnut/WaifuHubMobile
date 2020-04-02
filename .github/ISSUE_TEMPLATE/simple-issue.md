@@ -1,0 +1,24 @@
+---
+name: Simple Issue
+about: In order to open an issue about something simple
+title: ''
+labels: simple
+assignees: ''
+
+---
+
+## Expected Behavior
+
+
+## Actual Behavior
+
+
+## Steps to Reproduce the Problem
+
+  1.
+  1.
+  1.
+
+## Specifications
+  - Platform:
+  - Browser:
