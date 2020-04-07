@@ -1,20 +1,28 @@
+import 'package:WaifuHub/global/assets.dart';
+import 'package:WaifuHub/models/waifu.dart';
+import 'package:WaifuHub/widgets/waifuRow.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
-  const Home({Key key}) : super(key: key);
+  final Key key;
+
+  Home({this.key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home Screen"),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        title: Text(
+          "WaifuHubs",
+          style: headingLarge,
+        ),
       ),
-      body: ListView.builder(itemBuilder: (context, index) {
-        return ListTile(
-          title: Text('Lorem Ipsum'),
-          subtitle: Text('$index'),
-        );
-      }),
+      body: new ListView.builder(
+        itemBuilder: (context, index) => new WaifuRow(waifuList[index]),
+        itemCount: waifuList.length,
+      ),
     );
   }
 }

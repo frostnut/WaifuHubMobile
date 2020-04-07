@@ -3,10 +3,10 @@
 // using a stateful widget
 
 import 'package:flutter/material.dart';
-import 'package:app/account.dart';
-import 'package:app/explore.dart';
-import 'package:app/home.dart';
-import 'package:app/global/assets.dart';
+import 'package:WaifuHub/account.dart';
+import 'package:WaifuHub/explore.dart';
+import 'package:WaifuHub/home.dart';
+import 'package:WaifuHub/global/assets.dart';
 
 class BottomNavigationBarController extends StatefulWidget {
   @override
