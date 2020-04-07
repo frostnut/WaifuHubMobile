@@ -7,7 +7,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("First Screen"),
+        title: Text("Home Screen"),
       ),
       body: ListView.builder(itemBuilder: (context, index) {
         return ListTile(

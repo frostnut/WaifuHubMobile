@@ -7,7 +7,7 @@ class Account extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Third Screen"),
+        title: Text("Account Screen"),
       ),
       body: ListView.builder(itemBuilder: (context, index) {
         return ListTile(

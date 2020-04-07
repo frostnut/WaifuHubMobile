@@ -7,7 +7,7 @@ class Explore extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Second Screen"),
+        title: Text("Explore Screen"),
       ),
       body: ListView.builder(itemBuilder: (context, index) {
         return ListTile(
