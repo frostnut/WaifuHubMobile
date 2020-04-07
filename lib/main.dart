@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
+import './widgets/bottomNavBar.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(SampleApp());
 
-class MyApp extends StatelessWidget {
+class SampleApp extends StatelessWidget {
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Welcome to Flutter',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Welcome to Flutter'),
-        ),
-        body: Center(
-          child: Text('Hello World'),
-        ),
-      ),
+      title: 'WaifuHub',
+      home: BottomNavigationBarController(),
     );
   }
 }

@@ -4,14 +4,17 @@ import 'package:flutter/material.dart';
 // app color scheme defintion
 // darkPinkColor is used mainly for the bottom
 // navigation icons and text for forms
+// itemSelectedColor is used in the bottom
+// navigation menu to define the chosen item
 // lightPinkColor is used for the buttons
 // and lits view containers
 // headingsPinkColor is used for headings
 // for reference see the mocks in the assets
 // folder
-Color darkPinkColor = const Color(0x880E4F);
-Color lightPinkColor = const Color(0xEC407A);
-Color headingsPinkColor = const Color(0xD81B60);
+const darkPinkColor = const Color(0xFF880E4F);
+const itemSelectedColor = const Color(0xFFE91E63);
+const lightPinkColor = const Color(0xFFEC407A);
+const headingsPinkColor = const Color(0xFFD81B60);
 
 // Text style definition for large headings
 TextStyle headingLarge = new TextStyle(
