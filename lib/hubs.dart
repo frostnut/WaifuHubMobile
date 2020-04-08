@@ -3,10 +3,13 @@ import 'package:WaifuHub/models/waifu.dart';
 import 'package:WaifuHub/widgets/waifuRow.dart';
 import 'package:flutter/material.dart';
 
-class Home extends StatelessWidget {
+/// Hubs is used to display all the user's hubs. This consists of the waifu
+/// hub cards that they follow. For info on the waifu cards see waifuRow widget.
+/// Also contains the appBar title that is displayed above the hubs.
+class Hubs extends StatelessWidget {
   final Key key;
 
-  Home({this.key}) : super(key: key);
+  Hubs({this.key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

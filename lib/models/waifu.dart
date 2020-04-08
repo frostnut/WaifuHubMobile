@@ -1,5 +1,4 @@
-//temp waifu model, will be replaced by actual mongodb model soon
-
+/// temp waifu model, will be replaced by actual mongodb model soon
 class Waifu {
   final int id;
   final int likes;
@@ -9,7 +8,14 @@ class Waifu {
   final String description;
   final String image;
 
-  const Waifu({this.id, this.likes,this.comments,this.name, this.anime, this.description, this.image});
+  const Waifu(
+      {this.id,
+      this.likes,
+      this.comments,
+      this.name,
+      this.anime,
+      this.description,
+      this.image});
 }
 
 // dummy data - to be replaced with actual db data
