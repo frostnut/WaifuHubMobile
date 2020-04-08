@@ -1,13 +1,13 @@
 // This file is used to define global assets settings
 import 'package:flutter/material.dart';
 
-// app color scheme defintion
+// app color scheme definition
 // darkPinkColor is used mainly for the bottom
 // navigation icons and text for forms
 // itemSelectedColor is used in the bottom
 // navigation menu to define the chosen item
 // lightPinkColor is used for the buttons
-// and lits view containers
+// and list view containers
 // headingsPinkColor is used for headings
 // for reference see the mocks in the assets
 // folder

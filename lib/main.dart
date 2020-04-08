@@ -1,3 +1,6 @@
+import 'package:WaifuHub/account.dart';
+import 'package:WaifuHub/explore.dart';
+import 'package:WaifuHub/hubs.dart';
 import 'package:flutter/material.dart';
 import './widgets/bottomNavBar.dart';
 
@@ -10,6 +13,12 @@ class SampleApp extends StatelessWidget {
     return MaterialApp(
       title: 'WaifuHub',
       home: BottomNavigationBarController(),
+      initialRoute: '/',
+      routes: {
+        '/hubs': (context) => Hubs(),
+        '/explore': (context) => Explore(),
+        '/account': (context) => Account(),
+      },
     );
   }
 }
