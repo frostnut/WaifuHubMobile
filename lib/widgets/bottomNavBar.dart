@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:WaifuHub/account.dart';
 import 'package:WaifuHub/explore.dart';
-import 'package:WaifuHub/home.dart';
+import 'package:WaifuHub/hubs.dart';
 import 'package:WaifuHub/global/assets.dart';
 
 class BottomNavigationBarController extends StatefulWidget {
@@ -18,19 +18,19 @@ class _BottomNavigationBarControllerState
     extends State<BottomNavigationBarController> {
   final List<Widget> pages = [
     Home(
-      key: PageStorageKey('Page3'),
+      key: PageStorageKey('Hubs'),
     ),
     Explore(
-      key: PageStorageKey('Page2'),
+      key: PageStorageKey('Explore'),
     ),
     Account(
-      key: PageStorageKey('Page1'),
+      key: PageStorageKey('Account'),
     ),
   ];
 
   final PageStorageBucket bucket = PageStorageBucket();
 
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
   Widget _bottomNavigationBar(int selectedIndex) => BottomNavigationBar(
         unselectedItemColor: darkPinkColor,
@@ -40,7 +40,7 @@ class _BottomNavigationBarControllerState
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            title: Text('Home'),
+            title: Text('Hubs'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.explore),
