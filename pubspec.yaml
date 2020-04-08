@@ -19,18 +19,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
+  flutter_launcher_icons: ^0.7.2
   cupertino_icons: ^0.1.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
 flutter:
@@ -47,3 +41,9 @@ flutter:
     - assets/img/waifu3.png
     - assets/img/waifu4.png
     - assets/img/waifu5.png
+    - assets/img/icons/launcher_icon.png
+
+flutter_icons:
+  image_path: "assets/img/icons/launcher_icon.png"
+  android: true
+  ios: true
