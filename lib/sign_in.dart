@@ -1,3 +1,4 @@
+import 'package:WaifuHub/global/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/services.dart';
@@ -88,7 +89,7 @@ class _SignInScreenState extends State<SignInScreen> {
               email: _email.text, password: _password.text, context: context);
         },
         padding: EdgeInsets.all(12),
-        color: Theme.of(context).primaryColor,
+        color: lightPinkColor,
         child: Text('SIGN IN', style: TextStyle(color: Colors.white)),
       ),
     );

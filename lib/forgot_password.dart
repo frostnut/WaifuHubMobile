@@ -1,3 +1,4 @@
+import 'package:WaifuHub/global/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/services.dart';
@@ -29,7 +30,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           radius: 60.0,
           child: ClipOval(
             child: Image.asset(
-              'assets/images/default.png',
+              'assets/img/default.png',
               fit: BoxFit.cover,
               width: 120.0,
               height: 120.0,
@@ -66,7 +67,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           _forgotPassword(email: _email.text, context: context);
         },
         padding: EdgeInsets.all(12),
-        color: Theme.of(context).primaryColor,
+        color: lightPinkColor,
         child: Text('FORGOT PASSWORD', style: TextStyle(color: Colors.white)),
       ),
     );

@@ -6,6 +6,7 @@ import './models/user.dart';
 import './services/authentication/auth.dart';
 import './services/authentication/validator.dart';
 import './widgets/loading.dart';
+import './global/assets.dart';
 
 class SignUpScreen extends StatefulWidget {
   _SignUpScreenState createState() => _SignUpScreenState();
@@ -33,7 +34,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           radius: 60.0,
           child: ClipOval(
             child: Image.asset(
-              'assets/images/default.png',
+              'assets/img/default.png',
               fit: BoxFit.cover,
               width: 120.0,
               height: 120.0,
@@ -132,7 +133,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               context: context);
         },
         padding: EdgeInsets.all(12),
-        color: Theme.of(context).primaryColor,
+        color: lightPinkColor,
         child: Text('SIGN UP', style: TextStyle(color: Colors.white)),
       ),
     );
