@@ -34,11 +34,11 @@ class _BottomNavigationBarControllerState
 
   void _checkAuthentication() {
     setState(() {
-      _children[2] =SignIn();
+      _children[2] = SignInScreen();
     });
   }
 
-  void onTapped(int index) {
+  void _onTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
@@ -47,11 +47,19 @@ class _BottomNavigationBarControllerState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: darkPinkColor,
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+        onPressed: () {},
+      ),
       body: _children[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: darkPinkColor,
         selectedItemColor: itemSelectedColor,
-        onTap: onTapped,
+        onTap: _onTapped,
         currentIndex: _selectedIndex,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(

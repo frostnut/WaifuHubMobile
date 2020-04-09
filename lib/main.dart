@@ -1,8 +1,8 @@
 import 'package:WaifuHub/account.dart';
 import 'package:WaifuHub/explore.dart';
 import 'package:WaifuHub/hubs.dart';
+import 'package:WaifuHub/widgets/bottomNavBar.dart';
 import 'package:flutter/material.dart';
-import './widgets/bottomNavBar.dart';
 
 void main() => runApp(SampleApp());
 

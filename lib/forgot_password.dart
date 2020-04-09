@@ -2,19 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/services.dart';
 
-import './services/authentication/state_widget.dart';
 import './services/authentication/auth.dart';
 import './services/authentication/validator.dart';
 import './widgets/loading.dart';
 
-class SignInScreen extends StatefulWidget {
-  _SignInScreenState createState() => _SignInScreenState();
+class ForgotPasswordScreen extends StatefulWidget {
+  _ForgotPasswordScreenState createState() => _ForgotPasswordScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _email = new TextEditingController();
-  final TextEditingController _password = new TextEditingController();
 
   bool _autoValidate = false;
   bool _loadingVisible = false;
@@ -31,7 +29,7 @@ class _SignInScreenState extends State<SignInScreen> {
           radius: 60.0,
           child: ClipOval(
             child: Image.asset(
-              'assets/img/default.png',
+              'assets/images/default.png',
               fit: BoxFit.cover,
               width: 120.0,
               height: 120.0,
@@ -58,58 +56,28 @@ class _SignInScreenState extends State<SignInScreen> {
       ),
     );
 
-    final password = TextFormField(
-      autofocus: false,
-      obscureText: true,
-      controller: _password,
-      validator: Validator.validatePassword,
-      decoration: InputDecoration(
-        prefixIcon: Padding(
-          padding: EdgeInsets.only(left: 5.0),
-          child: Icon(
-            Icons.lock,
-            color: Colors.grey,
-          ), // icon is 48px widget.
-        ), // icon is 48px widget.
-        hintText: 'Password',
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-      ),
-    );
-
-    final loginButton = Padding(
+    final forgotPasswordButton = Padding(
       padding: EdgeInsets.symmetric(vertical: 16.0),
       child: RaisedButton(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),
         ),
         onPressed: () {
-          _emailLogin(
-              email: _email.text, password: _password.text, context: context);
+          _forgotPassword(email: _email.text, context: context);
         },
         padding: EdgeInsets.all(12),
         color: Theme.of(context).primaryColor,
-        child: Text('SIGN IN', style: TextStyle(color: Colors.white)),
+        child: Text('FORGOT PASSWORD', style: TextStyle(color: Colors.white)),
       ),
     );
 
-    final forgotLabel = FlatButton(
+    final signInLabel = FlatButton(
       child: Text(
-        'Forgot password?',
+        'Sign In',
         style: TextStyle(color: Colors.black54),
       ),
       onPressed: () {
-        Navigator.pushNamed(context, '/forgot-password');
-      },
-    );
-
-    final signUpLabel = FlatButton(
-      child: Text(
-        'Create an Account',
-        style: TextStyle(color: Colors.black54),
-      ),
-      onPressed: () {
-        Navigator.pushNamed(context, '/signup');
+        Navigator.pushNamed(context, '/signin');
       },
     );
 
@@ -130,12 +98,9 @@ class _SignInScreenState extends State<SignInScreen> {
                       logo,
                       SizedBox(height: 48.0),
                       email,
-                      SizedBox(height: 24.0),
-                      password,
                       SizedBox(height: 12.0),
-                      loginButton,
-                      forgotLabel,
-                      signUpLabel
+                      forgotPasswordButton,
+                      signInLabel
                     ],
                   ),
                 ),
@@ -152,23 +117,27 @@ class _SignInScreenState extends State<SignInScreen> {
     });
   }
 
-  void _emailLogin(
-      {String email, String password, BuildContext context}) async {
+  void _forgotPassword({String email, BuildContext context}) async {
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
     if (_formKey.currentState.validate()) {
       try {
-        SystemChannels.textInput.invokeMethod('TextInput.hide');
         await _changeLoadingVisible();
-        //need await so it has chance to go through error if found.
-        await StateWidget.of(context).logInUser(email, password);
-        await Navigator.pushNamed(context, '/');
+        await Auth.forgotPasswordEmail(email);
+        await _changeLoadingVisible();
+        Flushbar(
+          title: "Password Reset Email Sent",
+          message:
+              'Check your email and follow the instructions to reset your password.',
+          duration: Duration(seconds: 20),
+        )..show(context);
       } catch (e) {
         _changeLoadingVisible();
-        print("Sign In Error: $e");
+        print("Forgot Password Error: $e");
         String exception = Auth.getExceptionText(e);
         Flushbar(
-          title: "Sign In Error",
+          title: "Forgot Password Error",
           message: exception,
-          duration: Duration(seconds: 5),
+          duration: Duration(seconds: 10),
         )..show(context);
       }
     } else {
