@@ -1,8 +1,9 @@
+import 'package:WaifuHub/global/assets.dart';
+import 'package:WaifuHub/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:WaifuHub/account.dart';
 import 'package:WaifuHub/explore.dart';
 import 'package:WaifuHub/hubs.dart';
-import 'package:WaifuHub/global/assets.dart';
 
 /// bottom navigation bar that routes to hubs, explore and account
 /// uses an index to select page, the initial value of _selectedIndex
@@ -16,32 +17,42 @@ class BottomNavigationBarController extends StatefulWidget {
 
 /// control state that has a list of the states that the nav bar has
 /// to add new tabs to the navbar, add a new state here then also add it
-/// and a corresponding icon in the _bottomNavigationBar widget
+/// and a corresponding icon in the BottomNavigationBar widget
 class _BottomNavigationBarControllerState
     extends State<BottomNavigationBarController> {
-  final List<Widget> pages = [
-    Hubs(
-      key: PageStorageKey('Hubs'),
-    ),
-    Explore(
-      key: PageStorageKey('Explore'),
-    ),
-    Account(
-      key: PageStorageKey('Account'),
-    ),
+  int _selectedIndex = 1;
+  final List<Widget> _children = [
+    Hubs(),
+    Explore(),
+    Account(),
   ];
 
-  final PageStorageBucket bucket = PageStorageBucket();
+  void initState() {
+    _checkAuthentication();
+    super.initState();
+  }
 
-  int _selectedIndex = 1;
+  void _checkAuthentication() {
+    setState(() {
+      _children[2] =SignIn();
+    });
+  }
 
-  /// widget that is shown on screen and the icons
-  /// accepts a selection index that decides what tab is being selected
-  Widget _bottomNavigationBar(int selectedIndex) => BottomNavigationBar(
+  void onTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _children[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
         unselectedItemColor: darkPinkColor,
         selectedItemColor: itemSelectedColor,
-        onTap: (int index) => setState(() => _selectedIndex = index),
-        currentIndex: selectedIndex,
+        onTap: onTapped,
+        currentIndex: _selectedIndex,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -56,15 +67,6 @@ class _BottomNavigationBarControllerState
             title: Text('Account'),
           ),
         ],
-      );
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: _bottomNavigationBar(_selectedIndex),
-      body: PageStorage(
-        child: pages[_selectedIndex],
-        bucket: bucket,
       ),
     );
   }

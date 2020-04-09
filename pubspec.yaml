@@ -42,6 +42,7 @@ flutter:
     - assets/img/waifu4.png
     - assets/img/waifu5.png
     - assets/img/icons/launcher_icon.png
+    - assets/img/icons/ic_login.png
 
 flutter_icons:
   image_path: "assets/img/icons/launcher_icon.png"
