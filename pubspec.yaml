@@ -14,13 +14,17 @@ description: The WaifuHub Mobile App.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.6.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   flutter_launcher_icons: ^0.7.2
   cupertino_icons: ^0.1.2
+  firebase_auth: ^0.15.5+3
+  cloud_firestore: ^0.13.4+2
+  flushbar: 1.9.1
+  shared_preferences: ^0.5.6+3
 
 dev_dependencies:
   flutter_test:
@@ -42,7 +46,7 @@ flutter:
     - assets/img/waifu4.png
     - assets/img/waifu5.png
     - assets/img/icons/launcher_icon.png
-    - assets/img/icons/ic_login.png
+    - assets/img/default.png
 
 flutter_icons:
   image_path: "assets/img/icons/launcher_icon.png"

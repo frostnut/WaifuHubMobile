@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "915693387825",
+    "firebase_url": "https://waifuhub-fc521.firebaseio.com",
+    "project_id": "waifuhub-fc521",
+    "storage_bucket": "waifuhub-fc521.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:915693387825:android:0baf6241875218e4421510",
+        "android_client_info": {
+          "package_name": "com.waifuhub.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "915693387825-h3gefd1froe4megpet8j07mv9cka79uq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.waifuhub.app",
+            "certificate_hash": "fc6ea1f46638250f6e40d828340ee0a4c28842d6"
+          }
+        },
+        {
+          "client_id": "915693387825-vnqia1vrb79149snilvuvpa8pu4a1e4v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTq50uPwfqFMYkx4P7S2hm7eVFUgw3eYY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "915693387825-vnqia1vrb79149snilvuvpa8pu4a1e4v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
