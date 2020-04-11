@@ -3,7 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import './models/user.dart';
+import '../models/user.dart';
 
 class RegisterPage extends StatefulWidget {
   RegisterPage({Key key}) : super(key: key);
@@ -67,21 +67,12 @@ class _RegisterPageState extends State<RegisterPage> {
                     decoration: InputDecoration(
                         labelText: 'First Name*', hintText: "John"),
                     controller: firstNameInputController,
-                    validator: (value) {
-                      if (value.length < 3) {
-                        return "Please enter a valid first name.";
-                      }
-                    },
                   ),
                   TextFormField(
-                      decoration: InputDecoration(
-                          labelText: 'Last Name*', hintText: "Doe"),
-                      controller: lastNameInputController,
-                      validator: (value) {
-                        if (value.length < 3) {
-                          return "Please enter a valid last name.";
-                        }
-                      }),
+                    decoration: InputDecoration(
+                        labelText: 'Last Name*', hintText: "Doe"),
+                    controller: lastNameInputController,
+                  ),
                   TextFormField(
                     decoration: InputDecoration(
                         labelText: 'Email*', hintText: "john.doe@gmail.com"),
@@ -121,15 +112,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                       firstNameInputController.text +
                                           lastNameInputController.text,
                                       emailInputController.text)
-                                  /** Firestore.instance
-                                      .collection("users")
-                                      .document(currentUser.user.uid)
-                                      .setData({
-                                      "uid": currentUser.user.uid,
-                                      "fname": firstNameInputController.text,
-                                      "surname": lastNameInputController.text,
-                                      "email": emailInputController.text,
-                                      }) **/
                                   .then((result) => {
                                         Navigator.pushAndRemoveUntil(
                                             context,

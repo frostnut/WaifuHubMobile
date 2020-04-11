@@ -1,8 +1,8 @@
 import 'package:WaifuHub/global/assets.dart';
 import 'package:flutter/material.dart';
-import 'package:WaifuHub/account.dart';
-import 'package:WaifuHub/explore.dart';
-import 'package:WaifuHub/hubs.dart';
+import 'package:WaifuHub/pages/account_page.dart';
+import 'package:WaifuHub/pages/explore_page.dart';
+import 'package:WaifuHub/pages/hubs_page.dart';
 
 /// bottom navigation bar that routes to hubs, explore and account
 /// uses an index to select page, the initial value of _selectedIndex
