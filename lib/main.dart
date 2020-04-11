@@ -1,8 +1,5 @@
 import 'package:WaifuHub/account.dart';
 import 'package:WaifuHub/explore.dart';
-import 'package:WaifuHub/sign_in.dart';
-import './sign_up.dart';
-import './forgot_password.dart';
 import 'package:WaifuHub/hubs.dart';
 import 'package:WaifuHub/widgets/bottomNavBar.dart';
 import 'package:flutter/material.dart';
@@ -19,11 +16,8 @@ class SampleApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/hubs': (context) => Hubs(),
-        '/signin': (context) => SignInScreen(),
         '/explore': (context) => Explore(),
         '/account': (context) => Account(),
-        '/signup' : (context) => SignUpScreen(),
-        '/forgot-password' : (context) => ForgotPasswordScreen(),
       },
     );
   }
