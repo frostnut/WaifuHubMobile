@@ -1,9 +1,10 @@
 import 'package:WaifuHub/global/assets.dart';
+import 'package:WaifuHub/widgets/registration_form_text_field.dart';
 import 'package:WaifuHub/widgets/show_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../widgets/bottomNavBar.dart';
+import '../widgets/bottom_nav_bar.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -59,46 +60,10 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 children: <Widget>[
                   showLogo(),
-                  TextFormField(
-                    cursorColor: lightPinkColor,
-                    decoration: InputDecoration(
-                        enabledBorder: new UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: lightPinkColor,
-                          ),
-                        ),
-                        focusedBorder: new UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: lightPinkColor,
-                          ),
-                        ),
-                        labelText: 'Email*',
-                        labelStyle: textForm,
-                        hintStyle: textForm),
-                    controller: emailInputController,
-                    keyboardType: TextInputType.emailAddress,
-                    validator: emailValidator,
-                  ),
-                  TextFormField(
-                    cursorColor: lightPinkColor,
-                    decoration: InputDecoration(
-                      enabledBorder: new UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: lightPinkColor,
-                        ),
-                      ),
-                      focusedBorder: new UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: lightPinkColor,
-                        ),
-                      ),
-                      labelText: 'Password*',
-                      labelStyle: textForm,
-                    ),
-                    controller: pwdInputController,
-                    obscureText: true,
-                    validator: pwdValidator,
-                  ),
+                  registrationTextFormField(
+                      'Email*', emailInputController, emailValidator),
+                  registrationTextFormField(
+                      "Password*", pwdInputController, pwdValidator),
                   RaisedButton(
                     child: Text("Login"),
                     color: lightPinkColor,
