@@ -1,5 +1,4 @@
 import 'package:WaifuHub/global/assets.dart';
-import 'package:WaifuHub/sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:WaifuHub/account.dart';
 import 'package:WaifuHub/explore.dart';
@@ -10,6 +9,10 @@ import 'package:WaifuHub/hubs.dart';
 /// determines the page that will start on opening of the application
 /// or once the application is loaded if a splash screen is implemented
 class BottomNavigationBarController extends StatefulWidget {
+  final String uid;
+
+  const BottomNavigationBarController({Key key, this.uid}) : super(key: key);
+
   @override
   _BottomNavigationBarControllerState createState() =>
       _BottomNavigationBarControllerState();
@@ -28,14 +31,7 @@ class _BottomNavigationBarControllerState
   ];
 
   void initState() {
-    _checkAuthentication();
     super.initState();
-  }
-
-  void _checkAuthentication() {
-    setState(() {
-      _children[2] = SignInScreen();
-    });
   }
 
   void _onTapped(int index) {

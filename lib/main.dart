@@ -1,10 +1,6 @@
-import 'package:WaifuHub/account.dart';
-import 'package:WaifuHub/explore.dart';
-import 'package:WaifuHub/sign_in.dart';
-import './sign_up.dart';
-import './forgot_password.dart';
-import 'package:WaifuHub/hubs.dart';
-import 'package:WaifuHub/widgets/bottomNavBar.dart';
+import './splash_page.dart';
+import './register.dart';
+import './login_page.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(SampleApp());
@@ -15,15 +11,11 @@ class SampleApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'WaifuHub',
-      home: BottomNavigationBarController(),
+      home: SplashPage(),
       initialRoute: '/',
       routes: {
-        '/hubs': (context) => Hubs(),
-        '/signin': (context) => SignInScreen(),
-        '/explore': (context) => Explore(),
-        '/account': (context) => Account(),
-        '/signup' : (context) => SignUpScreen(),
-        '/forgot-password' : (context) => ForgotPasswordScreen(),
+        '/login': (BuildContext context) => LoginPage(),
+        '/register': (BuildContext context) => RegisterPage(),
       },
     );
   }
