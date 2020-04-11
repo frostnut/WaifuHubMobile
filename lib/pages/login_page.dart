@@ -61,9 +61,9 @@ class _LoginPageState extends State<LoginPage> {
                 children: <Widget>[
                   showLogo(),
                   registrationTextFormField(
-                      'Email*', emailInputController, emailValidator),
+                      'Email*', emailInputController, emailValidator, false),
                   registrationTextFormField(
-                      "Password*", pwdInputController, pwdValidator),
+                      "Password*", pwdInputController, pwdValidator, false),
                   RaisedButton(
                     child: Text("Login"),
                     color: lightPinkColor,

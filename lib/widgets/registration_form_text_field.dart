@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import '../global/assets.dart';
 
-Widget registrationTextFormField(String labelText,
-    TextEditingController inputController, Function validator) {
+Widget registrationTextFormField(
+    String labelText,
+    TextEditingController inputController,
+    Function validator,
+    bool obscureText) {
   return TextFormField(
     cursorColor: lightPinkColor,
     decoration: InputDecoration(
@@ -20,7 +23,7 @@ Widget registrationTextFormField(String labelText,
       labelStyle: textForm,
     ),
     controller: inputController,
-    obscureText: true,
+    obscureText: obscureText,
     validator: validator,
   );
 }

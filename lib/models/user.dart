@@ -42,10 +42,10 @@ class User {
     return User.fromJson(doc.data);
   }
 
-  void createUser(DatabaseReference databaseReference, String userID,
+  void createUser(Firestore firestore, String userID,
       String username, String email, String profPicUrl) {
     var key = randomAlphaNumeric(30);
-    databaseReference.child("users").child(userID).set({
+    firestore.collection("users").document(userID).setData({
       'userID': userID,
       'status': status,
       'username': username,

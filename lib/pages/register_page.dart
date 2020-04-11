@@ -1,6 +1,7 @@
 import 'package:WaifuHub/global/assets.dart';
 import 'package:WaifuHub/widgets/bottom_nav_bar.dart';
 import 'package:WaifuHub/widgets/show_logo.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,6 +27,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController emailInputController;
   TextEditingController pwdInputController;
   TextEditingController confirmPwdInputController;
+  final firestoreInstance = Firestore.instance;
   final databaseReference = FirebaseDatabase.instance.reference();
   File _image;
 
@@ -79,13 +81,13 @@ class _RegisterPageState extends State<RegisterPage> {
                 children: <Widget>[
                   showLogo(),
                   registrationTextFormField(
-                      "Username*", usernameInputController, null),
+                      "Username*", usernameInputController, null, false),
                   registrationTextFormField(
-                      "Email*", emailInputController, emailValidator),
+                      "Email*", emailInputController, emailValidator, false),
                   registrationTextFormField(
-                      "Password*", pwdInputController, pwdValidator),
+                      "Password*", pwdInputController, pwdValidator, true),
                   registrationTextFormField("Confirm Password*",
-                      confirmPwdInputController, pwdValidator),
+                      confirmPwdInputController, pwdValidator, true),
                   Container(
                     height: 10,
                   ),
@@ -170,7 +172,7 @@ class _RegisterPageState extends State<RegisterPage> {
     String url = await uploadFile(userID);
     User newUser = new User(
         userID: userID, username: username, email: email, profPicUrl: url);
-    newUser.createUser(databaseReference, userID, username, email, url);
+    newUser.createUser(firestoreInstance, userID, username, email, url);
     return newUser.userID;
   }
 
