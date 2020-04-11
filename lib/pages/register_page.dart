@@ -162,6 +162,8 @@ class _RegisterPageState extends State<RegisterPage> {
             ))));
   }
 
+  /// used to save the user profile into the firebase database
+  /// TODO: implement firestore storage for account profile pictures
   Future<String> _saveUserRef(DatabaseReference databaseReference,
       String userID, String username, String email) async {
     User newUser = new User(userID: userID, username: username, email: email);
