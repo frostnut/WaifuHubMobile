@@ -1,7 +1,9 @@
 import 'package:WaifuHub/widgets/bottomNavBar.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import './models/user.dart';
 
 class RegisterPage extends StatefulWidget {
   RegisterPage({Key key}) : super(key: key);
@@ -17,6 +19,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController emailInputController;
   TextEditingController pwdInputController;
   TextEditingController confirmPwdInputController;
+  final databaseReference = FirebaseDatabase.instance.reference();
 
   @override
   initState() {
@@ -112,15 +115,21 @@ class _RegisterPageState extends State<RegisterPage> {
                               .createUserWithEmailAndPassword(
                                   email: emailInputController.text,
                                   password: pwdInputController.text)
-                              .then((currentUser) => Firestore.instance
-                                  .collection("users")
-                                  .document(currentUser.user.uid)
-                                  .setData({
-                                    "uid": currentUser.user.uid,
-                                    "fname": firstNameInputController.text,
-                                    "surname": lastNameInputController.text,
-                                    "email": emailInputController.text,
-                                  })
+                              .then((currentUser) => _saveUserRef(
+                                      databaseReference,
+                                      currentUser.user.uid,
+                                      firstNameInputController.text +
+                                          lastNameInputController.text,
+                                      emailInputController.text)
+                                  /** Firestore.instance
+                                      .collection("users")
+                                      .document(currentUser.user.uid)
+                                      .setData({
+                                      "uid": currentUser.user.uid,
+                                      "fname": firstNameInputController.text,
+                                      "surname": lastNameInputController.text,
+                                      "email": emailInputController.text,
+                                      }) **/
                                   .then((result) => {
                                         Navigator.pushAndRemoveUntil(
                                             context,
@@ -169,5 +178,12 @@ class _RegisterPageState extends State<RegisterPage> {
                 ],
               ),
             ))));
+  }
+
+  Future<String> _saveUserRef(DatabaseReference databaseReference,
+      String userID, String username, String email) async {
+    User newUser = new User(userID: userID, username: username, email: email);
+    newUser.createUser(databaseReference, userID, username, email);
+    return newUser.userID;
   }
 }
