@@ -9,6 +9,10 @@ import 'package:WaifuHub/hubs.dart';
 /// determines the page that will start on opening of the application
 /// or once the application is loaded if a splash screen is implemented
 class BottomNavigationBarController extends StatefulWidget {
+  final String uid;
+
+  const BottomNavigationBarController({Key key, this.uid}) : super(key: key);
+
   @override
   _BottomNavigationBarControllerState createState() =>
       _BottomNavigationBarControllerState();
