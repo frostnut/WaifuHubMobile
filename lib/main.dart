@@ -1,6 +1,6 @@
-import './splash_page.dart';
-import './register.dart';
-import './login_page.dart';
+import 'pages/splash_page.dart';
+import 'pages/register_page.dart';
+import 'pages/login_page.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(SampleApp());
