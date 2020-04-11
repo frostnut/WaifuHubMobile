@@ -9,6 +9,7 @@ class User {
   String username;
   String email;
   String apiKey = "";
+  String profPicUrl;
 
   User({
     this.userID,
@@ -16,6 +17,7 @@ class User {
     this.username,
     this.email,
     apiKey,
+    this.profPicUrl,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => new User(
@@ -24,6 +26,7 @@ class User {
         username: json["username"],
         email: json["email"],
         apiKey: json["apiKey"],
+        profPicUrl: json["profPicUrl"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -32,6 +35,7 @@ class User {
         "username": username,
         "email": email,
         "apiKey": apiKey,
+        "profPicUrl": profPicUrl,
       };
 
   factory User.fromDocument(DocumentSnapshot doc) {
@@ -39,7 +43,7 @@ class User {
   }
 
   void createUser(DatabaseReference databaseReference, String userID,
-      String username, String email) {
+      String username, String email, String profPicUrl) {
     var key = randomAlphaNumeric(30);
     databaseReference.child("users").child(userID).set({
       'userID': userID,
@@ -47,6 +51,7 @@ class User {
       'username': username,
       'email': email,
       'apiKey': key,
+      'profPicUrl': profPicUrl,
     });
   }
 }
