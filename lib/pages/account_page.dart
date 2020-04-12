@@ -37,15 +37,49 @@ class _AccountState extends State<Account> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Indstillinger"),
-      ),
-      body: Container(
-        child: Column(
-          children: <Widget>[
-            _genProfPic(context),
-          ],
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: lightPinkColor,
+          centerTitle: true,
+          title: Text("Your Account"),
+        ),
+        body: Container(
+          child: Column(
+            children: <Widget>[
+              Container(
+                height: 20,
+              ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.1,
+                  ),
+                  _genProfPic(context),
+                  Container(
+                    width: 100,
+                  ),
+                  IconButton(
+                    color: darkPinkColor,
+                    icon: new Icon(Icons.edit),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+              Container(
+                height: 20,
+              ),
+              _fetchUsername(context),
+              RaisedButton(
+                color: lightPinkColor,
+                onPressed: () => _signOut(context),
+                child: Text(
+                  "Log out",
+                  style: TextStyle(color: Colors.white),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -58,39 +92,47 @@ class _AccountState extends State<Account> {
   }
 
   Widget _fetchUsername(BuildContext context) {
-    return new StreamBuilder(
-        stream: Firestore.instance
-            .collection('users')
-            .document(user.uid)
-            .snapshots(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return new Text("Loading");
-          }
-          var userDocument = snapshot.data;
-          return new Text(
-            userDocument.data['username'].toString(),
-            style: headingLarge,
-          );
-        });
+    try {
+      return new StreamBuilder(
+          stream: Firestore.instance
+              .collection('users')
+              .document(user.uid)
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return new Text("Loading...");
+            }
+            var userDocument = snapshot.data;
+            return new Text(
+              userDocument.data['username'].toString(),
+              style: headingLarge,
+            );
+          });
+    } on NoSuchMethodError {
+      return new CircularProgressIndicator();
+    }
   }
 
   Widget _genProfPic(BuildContext context) {
-    return new StreamBuilder(
-        stream: Firestore.instance
-            .collection('users')
-            .document(user.uid)
-            .snapshots(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return new Text("Loading");
-          }
-          var userDocument = snapshot.data;
-          var picUrl = userDocument.data['profPicUrl'].toString();
-         return new CircleAvatar(
-           radius: 100,
-           backgroundImage: NetworkImage(picUrl),
-         );
-        });
+    try {
+      return new StreamBuilder(
+          stream: Firestore.instance
+              .collection('users')
+              .document(user.uid)
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return new Text("Loading");
+            }
+            var userDocument = snapshot.data;
+            var picUrl = userDocument.data['profPicUrl'].toString();
+            return new CircleAvatar(
+              radius: 70,
+              backgroundImage: NetworkImage(picUrl),
+            );
+          });
+    } on NoSuchMethodError {
+      return new CircularProgressIndicator();
+    }
   }
 }
