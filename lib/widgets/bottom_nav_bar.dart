@@ -1,4 +1,5 @@
 import 'package:WaifuHub/global/assets.dart';
+import 'package:WaifuHub/pages/hub_create_page.dart';
 import 'package:flutter/material.dart';
 import 'package:WaifuHub/pages/account_page.dart';
 import 'package:WaifuHub/pages/explore_page.dart';
@@ -49,7 +50,12 @@ class _BottomNavigationBarControllerState
           Icons.add,
           color: Colors.white,
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => HubCreatePage()),
+          );
+        },
       ),
       body: _children[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(

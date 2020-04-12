@@ -1,6 +1,6 @@
 import 'package:WaifuHub/global/assets.dart';
 import 'package:flutter/material.dart';
-import 'package:WaifuHub/models/waifu.dart';
+import 'package:WaifuHub/models/hub.dart';
 
 // used to put space between objects
 const double separatorDist = 10.0;
@@ -8,16 +8,16 @@ const double separatorDist = 10.0;
 const double waifuAvatarRadius = 50.0;
 // used to determine the icon size for likes and comments
 const double iconsSize = 20.0;
-const double iconContainerWidth = iconsSize /2;
+const double iconContainerWidth = iconsSize / 2;
 
 /// WaifuRow is the widget used to load the waifu cards
 /// like the ones on the explore and hubs tabs
 /// Accepts a waifu as a field. This field is used to
 /// generate the card
 class WaifuRow extends StatelessWidget {
-  final Waifu waifu;
+  final Hub hub;
 
-  WaifuRow(this.waifu);
+  WaifuRow(this.hub);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class WaifuRow extends StatelessWidget {
       margin: new EdgeInsets.symmetric(vertical: 16.0),
       alignment: FractionalOffset.centerLeft,
       child: new CircleAvatar(
-        backgroundImage: new AssetImage(waifu.image),
+        backgroundImage: new NetworkImage(hub.imageUrl),
         radius: waifuAvatarRadius,
         backgroundColor: Colors.transparent,
       ),
@@ -58,28 +58,20 @@ class WaifuRow extends StatelessWidget {
         children: <Widget>[
           new Container(height: 3.0),
           new Text(
-            waifu.name,
+            hub.hubname,
             style: TextStyle(color: Colors.white),
           ),
           new Container(height: separatorDist),
-          Text(
-            waifu.anime,
-            style: TextStyle(color: Colors.white),
-          ),
-          Text(
-            waifu.description,
-            style: TextStyle(color: Colors.white),
-          ),
           new Container(height: separatorDist),
           new Row(
             children: <Widget>[
               new Expanded(
                   child: _waifuValue(
-                      value: waifu.likes.toString(),
+                      value: hub.likes.toString(),
                       image: 'assets/img/icons/ic_likes.png')),
               new Expanded(
                   child: _waifuValue(
-                      value: waifu.comments.toString(),
+                      value: hub.commentIDs.length.toString(),
                       image: 'assets/img/icons/ic_comments.png'))
             ],
           ),

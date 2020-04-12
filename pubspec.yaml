@@ -29,6 +29,7 @@ dependencies:
   random_string: ^2.0.1
   image_picker: ^0.6.5
   firebase_storage: ^3.0.3
+  intl: ^0.16.1
 
 dev_dependencies:
   flutter_test:
@@ -51,6 +52,7 @@ flutter:
     - assets/img/waifu5.png
     - assets/img/icons/launcher_icon.png
     - assets/img/default.png
+    - assets/img/default2.png
 
 flutter_icons:
   image_path: "assets/img/icons/launcher_icon.png"

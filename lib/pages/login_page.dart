@@ -59,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
               key: _loginFormKey,
               child: Column(
                 children: <Widget>[
-                  showLogo(),
+                  showLogo("assets/img/default.png"),
                   registrationTextFormField(
                       'Email*', emailInputController, emailValidator, false),
                   registrationTextFormField(

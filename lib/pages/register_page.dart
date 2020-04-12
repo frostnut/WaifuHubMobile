@@ -79,7 +79,7 @@ class _RegisterPageState extends State<RegisterPage> {
               key: _registerFormKey,
               child: Column(
                 children: <Widget>[
-                  showLogo(),
+                  showLogo("assets/img/default.png"),
                   registrationTextFormField(
                       "Username*", usernameInputController, null, false),
                   registrationTextFormField(

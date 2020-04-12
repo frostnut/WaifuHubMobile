@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget showLogo() {
+Widget showLogo(String pic) {
   return new Hero(
     tag: 'hero',
     child: Padding(
@@ -9,7 +9,7 @@ Widget showLogo() {
         backgroundColor: Colors.transparent,
         radius: 48.0,
         child: CircleAvatar(
-          backgroundImage: new AssetImage('assets/img/default.png'),
+          backgroundImage: new AssetImage(pic),
           radius: 50,
           backgroundColor: Colors.transparent,
         ),
