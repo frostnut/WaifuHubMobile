@@ -113,7 +113,12 @@ class WaifuRow extends StatelessWidget {
         ),
         child: new Stack(
           children: <Widget>[
-            _waifuCard,
+            InkWell(
+              child: _waifuCard,
+              onTap: () {
+                print("tapped on me");
+              },
+            ),
             _waifuThumbnail,
           ],
         ));

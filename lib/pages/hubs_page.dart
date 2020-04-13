@@ -15,7 +15,7 @@ class Hubs extends StatefulWidget {
 }
 
 class _HubsState extends State<Hubs> {
-  var _waifuList;
+  var _waifuList = [];
 
   @override
   void initState() {

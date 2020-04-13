@@ -78,14 +78,18 @@ class _LoginPageState extends State<LoginPage> {
                                 .collection("users")
                                 .document(currentUser.user.uid)
                                 .get()
-                                .then((DocumentSnapshot result) =>
-                                    Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                BottomNavigationBarController(
-                                                  uid: currentUser.user.uid,
-                                                ))))
+                                .then(
+                                  (DocumentSnapshot result) =>
+                                      Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          BottomNavigationBarController(
+                                        uid: currentUser.user.uid,
+                                      ),
+                                    ),
+                                  ),
+                                )
                                 .catchError((err) => print(err)))
                             .catchError((err) => print(err));
                       }
