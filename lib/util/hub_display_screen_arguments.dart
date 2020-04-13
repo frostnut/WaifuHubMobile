@@ -1,3 +1,5 @@
+/// util class used to pass args to the
+/// HubDisplay page - used for encapsulation
 class HubDisplayScreenArguments {
   final String id;
   final List<dynamic> commentIDs;

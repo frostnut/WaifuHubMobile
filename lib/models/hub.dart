@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+/// Hubs are the pages for waifus
 class Hub {
   String id;
   int likes = 0;
@@ -38,6 +39,7 @@ class Hub {
   factory Hub.fromDocument(DocumentSnapshot doc) {
     return Hub.fromJson(doc.data);
   }
+  
   void createHub(Firestore firestore, String key, String hubname,
       String description, String imageUrl) {
     firestore.collection("hubs").document(key).setData({

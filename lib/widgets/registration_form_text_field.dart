@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../global/assets.dart';
 
+/// form fields
 Widget registrationTextFormField(
     String labelText,
     TextEditingController inputController,

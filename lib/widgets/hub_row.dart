@@ -108,31 +108,32 @@ class WaifuRow extends StatelessWidget {
 
     // tie it all together and return waifu card with a thumbnail
     return new Container(
-        height: 130.0,
-        margin: const EdgeInsets.symmetric(
-          vertical: 16.0,
-          horizontal: 24.0,
-        ),
-        child: new Stack(
-          children: <Widget>[
-            InkWell(
-              child: _waifuCard,
-              onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  HubDisplay.routeName,
-                  arguments: HubDisplayScreenArguments(
-                    hub.id,
-                    hub.commentIDs,
-                    hub.hubname,
-                    hub.description,
-                    hub.imageUrl,
-                  ),
-                );
-              },
-            ),
-            _waifuThumbnail,
-          ],
-        ));
+      height: 130.0,
+      margin: const EdgeInsets.symmetric(
+        vertical: 16.0,
+        horizontal: 24.0,
+      ),
+      child: new Stack(
+        children: <Widget>[
+          InkWell(
+            child: _waifuCard,
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                HubDisplay.routeName,
+                arguments: HubDisplayScreenArguments(
+                  hub.id,
+                  hub.commentIDs,
+                  hub.hubname,
+                  hub.description,
+                  hub.imageUrl,
+                ),
+              );
+            },
+          ),
+          _waifuThumbnail,
+        ],
+      ),
+    );
   }
 }

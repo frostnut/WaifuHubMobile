@@ -64,104 +64,107 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: lightPinkColor,
-          centerTitle: true,
-          title: Text(
-            "Register",
-            style: TextStyle(color: Colors.white),
+      appBar: AppBar(
+        backgroundColor: lightPinkColor,
+        centerTitle: true,
+        title: Text(
+          "Register",
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+      body: Container(
+        padding: const EdgeInsets.all(20.0),
+        child: SingleChildScrollView(
+          child: Form(
+            key: _registerFormKey,
+            child: Column(
+              children: <Widget>[
+                showLogo("assets/img/default.png"),
+                registrationTextFormField(
+                    "Username*", usernameInputController, null, false),
+                registrationTextFormField(
+                    "Email*", emailInputController, emailValidator, false),
+                registrationTextFormField(
+                    "Password*", pwdInputController, pwdValidator, true),
+                registrationTextFormField("Confirm Password*",
+                    confirmPwdInputController, pwdValidator, true),
+                Container(
+                  height: 10,
+                ),
+                RaisedButton(
+                  child: Text("Pick a profile pic"),
+                  color: lightPinkColor,
+                  textColor: Colors.white,
+                  onPressed: chooseFile,
+                ),
+                RaisedButton(
+                  child: Text("Register"),
+                  color: lightPinkColor,
+                  textColor: Colors.white,
+                  onPressed: () {
+                    if (_registerFormKey.currentState.validate()) {
+                      if (pwdInputController.text ==
+                          confirmPwdInputController.text) {
+                        FirebaseAuth.instance
+                            .createUserWithEmailAndPassword(
+                                email: emailInputController.text,
+                                password: pwdInputController.text)
+                            .then((currentUser) => _saveUserRef(
+                                  databaseReference,
+                                  currentUser.user.uid,
+                                  usernameInputController.text,
+                                  emailInputController.text,
+                                )
+                                    .then((result) => {
+                                          Navigator.pushAndRemoveUntil(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      BottomNavigationBarController(
+                                                        uid: currentUser
+                                                            .user.uid,
+                                                      )),
+                                              (_) => false),
+                                          usernameInputController.clear(),
+                                          emailInputController.clear(),
+                                          pwdInputController.clear(),
+                                        })
+                                    .catchError((err) => print(err)))
+                            .catchError((err) => print(err));
+                      } else {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text("Error"),
+                                content: Text("The passwords do not match"),
+                                actions: <Widget>[
+                                  FlatButton(
+                                    child: Text("Close"),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              );
+                            });
+                      }
+                    }
+                  },
+                ),
+                Text("Already have an account?"),
+                FlatButton(
+                  child: Text("Login here!"),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
           ),
         ),
-        body: Container(
-            padding: const EdgeInsets.all(20.0),
-            child: SingleChildScrollView(
-                child: Form(
-              key: _registerFormKey,
-              child: Column(
-                children: <Widget>[
-                  showLogo("assets/img/default.png"),
-                  registrationTextFormField(
-                      "Username*", usernameInputController, null, false),
-                  registrationTextFormField(
-                      "Email*", emailInputController, emailValidator, false),
-                  registrationTextFormField(
-                      "Password*", pwdInputController, pwdValidator, true),
-                  registrationTextFormField("Confirm Password*",
-                      confirmPwdInputController, pwdValidator, true),
-                  Container(
-                    height: 10,
-                  ),
-                  RaisedButton(
-                    child: Text("Pick a profile pic"),
-                    color: lightPinkColor,
-                    textColor: Colors.white,
-                    onPressed: chooseFile,
-                  ),
-                  RaisedButton(
-                    child: Text("Register"),
-                    color: lightPinkColor,
-                    textColor: Colors.white,
-                    onPressed: () {
-                      if (_registerFormKey.currentState.validate()) {
-                        if (pwdInputController.text ==
-                            confirmPwdInputController.text) {
-                          FirebaseAuth.instance
-                              .createUserWithEmailAndPassword(
-                                  email: emailInputController.text,
-                                  password: pwdInputController.text)
-                              .then((currentUser) => _saveUserRef(
-                                    databaseReference,
-                                    currentUser.user.uid,
-                                    usernameInputController.text,
-                                    emailInputController.text,
-                                  )
-                                      .then((result) => {
-                                            Navigator.pushAndRemoveUntil(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        BottomNavigationBarController(
-                                                          uid: currentUser
-                                                              .user.uid,
-                                                        )),
-                                                (_) => false),
-                                            usernameInputController.clear(),
-                                            emailInputController.clear(),
-                                            pwdInputController.clear(),
-                                          })
-                                      .catchError((err) => print(err)))
-                              .catchError((err) => print(err));
-                        } else {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text("Error"),
-                                  content: Text("The passwords do not match"),
-                                  actions: <Widget>[
-                                    FlatButton(
-                                      child: Text("Close"),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                    )
-                                  ],
-                                );
-                              });
-                        }
-                      }
-                    },
-                  ),
-                  Text("Already have an account?"),
-                  FlatButton(
-                    child: Text("Login here!"),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  )
-                ],
-              ),
-            ))));
+      ),
+    );
   }
 
   /// used to save the user profile into the firebase database
@@ -185,6 +188,7 @@ class _RegisterPageState extends State<RegisterPage> {
     });
   }
 
+  /// uploads file to firestore storage
   Future<String> uploadFile(String uID) async {
     StorageReference storageReference =
         FirebaseStorage.instance.ref().child('users/$uID');

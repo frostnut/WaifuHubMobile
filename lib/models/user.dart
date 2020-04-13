@@ -4,7 +4,7 @@ import 'package:random_string/random_string.dart';
 
 class User {
   String userID;
-  String status = "";
+  String status = "Just created my WaifuHub account!";
   String username;
   String email;
   String apiKey = "";

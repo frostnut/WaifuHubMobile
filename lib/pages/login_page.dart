@@ -47,63 +47,66 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          backgroundColor: lightPinkColor,
-          title: Text("Login"),
-        ),
-        body: Container(
-            padding: const EdgeInsets.all(20.0),
-            child: SingleChildScrollView(
-                child: Form(
-              key: _loginFormKey,
-              child: Column(
-                children: <Widget>[
-                  showLogo("assets/img/default.png"),
-                  registrationTextFormField(
-                      'Email*', emailInputController, emailValidator, false),
-                  registrationTextFormField(
-                      "Password*", pwdInputController, pwdValidator, false),
-                  RaisedButton(
-                    child: Text("Login"),
-                    color: lightPinkColor,
-                    textColor: Colors.white,
-                    onPressed: () {
-                      if (_loginFormKey.currentState.validate()) {
-                        FirebaseAuth.instance
-                            .signInWithEmailAndPassword(
-                                email: emailInputController.text,
-                                password: pwdInputController.text)
-                            .then((currentUser) => Firestore.instance
-                                .collection("users")
-                                .document(currentUser.user.uid)
-                                .get()
-                                .then(
-                                  (DocumentSnapshot result) =>
-                                      Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          BottomNavigationBarController(
-                                        uid: currentUser.user.uid,
-                                      ),
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: lightPinkColor,
+        title: Text("Login"),
+      ),
+      body: Container(
+        padding: const EdgeInsets.all(20.0),
+        child: SingleChildScrollView(
+          child: Form(
+            key: _loginFormKey,
+            child: Column(
+              children: <Widget>[
+                showLogo("assets/img/default.png"),
+                registrationTextFormField(
+                    'Email*', emailInputController, emailValidator, false),
+                registrationTextFormField(
+                    "Password*", pwdInputController, pwdValidator, false),
+                RaisedButton(
+                  child: Text("Login"),
+                  color: lightPinkColor,
+                  textColor: Colors.white,
+                  onPressed: () {
+                    if (_loginFormKey.currentState.validate()) {
+                      FirebaseAuth.instance
+                          .signInWithEmailAndPassword(
+                              email: emailInputController.text,
+                              password: pwdInputController.text)
+                          .then((currentUser) => Firestore.instance
+                              .collection("users")
+                              .document(currentUser.user.uid)
+                              .get()
+                              .then(
+                                (DocumentSnapshot result) =>
+                                    Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        BottomNavigationBarController(
+                                      uid: currentUser.user.uid,
                                     ),
                                   ),
-                                )
-                                .catchError((err) => print(err)))
-                            .catchError((err) => print(err));
-                      }
-                    },
-                  ),
-                  Text("Don't have an account yet?"),
-                  FlatButton(
-                    child: Text("Register here!"),
-                    onPressed: () {
-                      Navigator.pushNamed(context, "/register");
-                    },
-                  )
-                ],
-              ),
-            ))));
+                                ),
+                              )
+                              .catchError((err) => print(err)))
+                          .catchError((err) => print(err));
+                    }
+                  },
+                ),
+                Text("Don't have an account yet?"),
+                FlatButton(
+                  child: Text("Register here!"),
+                  onPressed: () {
+                    Navigator.pushNamed(context, "/register");
+                  },
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

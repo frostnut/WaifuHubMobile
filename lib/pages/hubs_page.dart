@@ -37,6 +37,8 @@ class _HubsState extends State<Hubs> {
     );
   }
 
+  /// fetches all hubs from the firestore database
+  /// and adds them to the waifulist
   void _genWaifuList(BuildContext context) async {
     QuerySnapshot querySnapshot =
         await Firestore.instance.collection("hubs").getDocuments();

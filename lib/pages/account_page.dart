@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+/// Account page displays user specific info
+/// Also contains the edit profile Icon button
+/// and the log out button.
 class Account extends StatefulWidget {
   Account({Key key}) : super(key: key);
 
@@ -21,6 +24,7 @@ class _AccountState extends State<Account> {
     FirebaseAuth.instance.currentUser().then(setUser).catchError(setError);
   }
 
+  /// sets current user
   void setUser(FirebaseUser user) {
     setState(() {
       this.user = user;
@@ -28,6 +32,7 @@ class _AccountState extends State<Account> {
     });
   }
 
+  /// sets error if error fethcing user
   void setError(e) {
     setState(() {
       this.user = null;
@@ -77,7 +82,7 @@ class _AccountState extends State<Account> {
                   "Log out",
                   style: TextStyle(color: Colors.white),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -85,12 +90,16 @@ class _AccountState extends State<Account> {
     );
   }
 
+  /// handles logging out logic, uses FirebaseAuth
+  /// sign out and pushes back to login
   void _signOut(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
     Navigator.of(context)
         .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
   }
 
+  /// retrieves user's username
+  /// https://pub.dev/packages/firebase_auth
   Widget _fetchUsername(BuildContext context) {
     try {
       return new StreamBuilder(
@@ -113,6 +122,9 @@ class _AccountState extends State<Account> {
     }
   }
 
+  /// fetches profile pic URL and generates
+  /// the circular avatar using a network
+  /// image
   Widget _genProfPic(BuildContext context) {
     try {
       return new StreamBuilder(

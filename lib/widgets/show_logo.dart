@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+/// used to gen circular logos on 
+/// form pages
 Widget showLogo(String pic) {
   return new Hero(
     tag: 'hero',

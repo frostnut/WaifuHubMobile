@@ -11,9 +11,9 @@ import 'dart:io';
 import '../widgets/registration_form_text_field.dart';
 import 'package:random_string/random_string.dart';
 
-/// Register page handles logic for registering a user
-/// register a user requires a username, email, password
-/// and for a profile picture to be selected
+/// allows user to register a new hub
+/// much of the logic is repeated from register
+/// page
 class HubCreatePage extends StatefulWidget {
   HubCreatePage({Key key}) : super(key: key);
 
@@ -98,6 +98,8 @@ class _HubCreatePageState extends State<HubCreatePage> {
     );
   }
 
+  /// passes all needed params to create a new hub then creates it in firestore
+  /// instance
   Future<String> _saveHub(DatabaseReference databaseReference, String hubname,
       String description) async {
     var key = randomAlphaNumeric(30);
@@ -115,6 +117,7 @@ class _HubCreatePageState extends State<HubCreatePage> {
     });
   }
 
+  /// uploads file to firestore storage
   Future<String> uploadFile(String hubID) async {
     StorageReference storageReference =
         FirebaseStorage.instance.ref().child('hub/$hubID');
