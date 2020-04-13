@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:random_string/random_string.dart';
-import './hub.dart';
 
 class User {
   String userID;
@@ -9,16 +8,16 @@ class User {
   String username;
   String email;
   String apiKey = "";
-  List<String> hubIDs;
+  List<dynamic> hubIDs = [];
   String profPicUrl;
 
   User({
     this.userID,
-    status,
+    this.status,
     this.username,
     this.email,
-    apiKey,
-    hubs,
+    this.apiKey,
+    this.hubIDs,
     this.profPicUrl,
   });
 
@@ -28,7 +27,7 @@ class User {
         username: json["username"],
         email: json["email"],
         apiKey: json["apiKey"],
-        hubs: json["hubs"],
+        hubIDs: json["hubs"],
         profPicUrl: json["profPicUrl"],
       );
 
@@ -38,7 +37,7 @@ class User {
         "username": username,
         "email": email,
         "apiKey": apiKey,
-        "hubs": hubIDs,
+        "hubIDs": hubIDs,
         "profPicUrl": profPicUrl,
       };
 
@@ -55,18 +54,18 @@ class User {
       'username': username,
       'email': email,
       'apiKey': key,
-      'hubs': [],
+      'hubIDs': [],
       'profPicUrl': profPicUrl,
     });
   }
-}
 
-User userFromJson(String str) {
-  final jsonData = json.decode(str);
-  return User.fromJson(jsonData);
-}
+  User userFromJson(String str) {
+    final jsonData = json.decode(str);
+    return User.fromJson(jsonData);
+  }
 
-String userToJson(User data) {
-  final dyn = data.toJson();
-  return json.encode(dyn);
+  String userToJson(User data) {
+    final dyn = data.toJson();
+    return json.encode(dyn);
+  }
 }

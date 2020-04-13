@@ -4,12 +4,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Hub {
   String id;
   int likes = 0;
-  List<String> commentIDs = [];
+  List<dynamic> commentIDs = [];
   String hubname;
   String description;
   String imageUrl;
 
-  Hub({id, likes, commentIDs, this.hubname, this.description, this.imageUrl});
+  Hub(
+      {this.id,
+      likes,
+      this.commentIDs,
+      this.hubname,
+      this.description,
+      this.imageUrl});
 
   factory Hub.fromJson(Map<String, dynamic> json) => new Hub(
         id: json["id"],
@@ -43,14 +49,14 @@ class Hub {
       "imageUrl": imageUrl,
     });
   }
-}
 
-Hub hubFromJson(String str) {
-  final jsonData = json.decode(str);
-  return Hub.fromJson(jsonData);
-}
+  Hub hubFromJson(String str) {
+    final jsonData = json.decode(str);
+    return Hub.fromJson(jsonData);
+  }
 
-String userToJson(Hub data) {
-  final dyn = data.toJson();
-  return json.encode(dyn);
+  String hubToJson(Hub data) {
+    final dyn = data.toJson();
+    return json.encode(dyn);
+  }
 }

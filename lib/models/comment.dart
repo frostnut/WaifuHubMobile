@@ -10,7 +10,7 @@ class Comment {
   String text;
   String stamp;
 
-  Comment({this.id, likes, this.hubId, this.text, stamp});
+  Comment({this.id, this.likes, this.hubId, this.text, stamp});
 
   factory Comment.fromJson(Map<String, dynamic> json) => new Comment(
         id: json["id"],
@@ -33,12 +33,12 @@ class Comment {
   }
 }
 
-Comment userFromJson(String str) {
+Comment commentFromJson(String str) {
   final jsonData = json.decode(str);
   return Comment.fromJson(jsonData);
 }
 
-String userToJson(Comment data) {
+String commentToJson(Comment data) {
   final dyn = data.toJson();
   return json.encode(dyn);
 }

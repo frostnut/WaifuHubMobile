@@ -1,6 +1,8 @@
 import 'package:WaifuHub/global/assets.dart';
+import 'package:WaifuHub/pages/hub_display_page.dart';
 import 'package:flutter/material.dart';
 import 'package:WaifuHub/models/hub.dart';
+import '../util/hub_display_screen_arguments.dart';
 
 // used to put space between objects
 const double separatorDist = 10.0;
@@ -116,7 +118,17 @@ class WaifuRow extends StatelessWidget {
             InkWell(
               child: _waifuCard,
               onTap: () {
-                print("tapped on me");
+                Navigator.pushNamed(
+                  context,
+                  HubDisplay.routeName,
+                  arguments: HubDisplayScreenArguments(
+                    hub.id,
+                    hub.commentIDs,
+                    hub.hubname,
+                    hub.description,
+                    hub.imageUrl,
+                  ),
+                );
               },
             ),
             _waifuThumbnail,
