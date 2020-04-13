@@ -14,9 +14,8 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
-  FirebaseAuth auth = FirebaseAuth.instance;
-  FirebaseUser user;
-  String error;
+  FirebaseUser _user;
+  String _error;
 
   @override
   void initState() {
@@ -27,16 +26,16 @@ class _AccountState extends State<Account> {
   /// sets current user
   void setUser(FirebaseUser user) {
     setState(() {
-      this.user = user;
-      this.error = null;
+      this._user = user;
+      this._error = null;
     });
   }
 
   /// sets error if error fethcing user
   void setError(e) {
     setState(() {
-      this.user = null;
-      this.error = e.toString();
+      this._user = null;
+      this._error = e.toString();
     });
   }
 
@@ -105,7 +104,7 @@ class _AccountState extends State<Account> {
       return new StreamBuilder(
           stream: Firestore.instance
               .collection('users')
-              .document(user.uid)
+              .document(_user.uid)
               .snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
@@ -130,7 +129,7 @@ class _AccountState extends State<Account> {
       return new StreamBuilder(
           stream: Firestore.instance
               .collection('users')
-              .document(user.uid)
+              .document(_user.uid)
               .snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {

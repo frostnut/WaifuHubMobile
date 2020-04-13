@@ -23,20 +23,20 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   final GlobalKey<FormState> _registerFormKey = GlobalKey<FormState>();
-  TextEditingController usernameInputController;
-  TextEditingController emailInputController;
-  TextEditingController pwdInputController;
-  TextEditingController confirmPwdInputController;
-  final firestoreInstance = Firestore.instance;
-  final databaseReference = FirebaseDatabase.instance.reference();
+  TextEditingController _usernameInputController;
+  TextEditingController _emailInputController;
+  TextEditingController _pwdInputController;
+  TextEditingController _confirmPwdInputController;
+  final _firestoreInstance = Firestore.instance;
+  final _databaseReference = FirebaseDatabase.instance.reference();
   File _image;
 
   @override
   initState() {
-    usernameInputController = new TextEditingController();
-    emailInputController = new TextEditingController();
-    pwdInputController = new TextEditingController();
-    confirmPwdInputController = new TextEditingController();
+    _usernameInputController = new TextEditingController();
+    _emailInputController = new TextEditingController();
+    _pwdInputController = new TextEditingController();
+    _confirmPwdInputController = new TextEditingController();
     super.initState();
   }
 
@@ -81,13 +81,13 @@ class _RegisterPageState extends State<RegisterPage> {
               children: <Widget>[
                 showLogo("assets/img/default.png"),
                 registrationTextFormField(
-                    "Username*", usernameInputController, null, false),
+                    "Username*", _usernameInputController, null, false),
                 registrationTextFormField(
-                    "Email*", emailInputController, emailValidator, false),
+                    "Email*", _emailInputController, emailValidator, false),
                 registrationTextFormField(
-                    "Password*", pwdInputController, pwdValidator, true),
+                    "Password*", _pwdInputController, pwdValidator, true),
                 registrationTextFormField("Confirm Password*",
-                    confirmPwdInputController, pwdValidator, true),
+                    _confirmPwdInputController, pwdValidator, true),
                 Container(
                   height: 10,
                 ),
@@ -95,7 +95,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Text("Pick a profile pic"),
                   color: lightPinkColor,
                   textColor: Colors.white,
-                  onPressed: chooseFile,
+                  onPressed: _chooseFile,
                 ),
                 RaisedButton(
                   child: Text("Register"),
@@ -103,17 +103,17 @@ class _RegisterPageState extends State<RegisterPage> {
                   textColor: Colors.white,
                   onPressed: () {
                     if (_registerFormKey.currentState.validate()) {
-                      if (pwdInputController.text ==
-                          confirmPwdInputController.text) {
+                      if (_pwdInputController.text ==
+                          _confirmPwdInputController.text) {
                         FirebaseAuth.instance
                             .createUserWithEmailAndPassword(
-                                email: emailInputController.text,
-                                password: pwdInputController.text)
+                                email: _emailInputController.text,
+                                password: _pwdInputController.text)
                             .then((currentUser) => _saveUserRef(
-                                  databaseReference,
+                                  _databaseReference,
                                   currentUser.user.uid,
-                                  usernameInputController.text,
-                                  emailInputController.text,
+                                  _usernameInputController.text,
+                                  _emailInputController.text,
                                 )
                                     .then((result) => {
                                           Navigator.pushAndRemoveUntil(
@@ -125,9 +125,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                                             .user.uid,
                                                       )),
                                               (_) => false),
-                                          usernameInputController.clear(),
-                                          emailInputController.clear(),
-                                          pwdInputController.clear(),
+                                          _usernameInputController.clear(),
+                                          _emailInputController.clear(),
+                                          _pwdInputController.clear(),
                                         })
                                     .catchError((err) => print(err)))
                             .catchError((err) => print(err));
@@ -172,15 +172,15 @@ class _RegisterPageState extends State<RegisterPage> {
   /// download url in user ref
   Future<String> _saveUserRef(DatabaseReference databaseReference,
       String userID, String username, String email) async {
-    String url = await uploadFile(userID);
+    String url = await _uploadFile(userID);
     User newUser = new User(
         userID: userID, username: username, email: email, profPicUrl: url);
-    newUser.createUser(firestoreInstance, userID, username, email, url);
+    newUser.createUser(_firestoreInstance, userID, username, email, url);
     return newUser.userID;
   }
 
   /// file picker from gallery
-  Future chooseFile() async {
+  Future _chooseFile() async {
     await ImagePicker.pickImage(source: ImageSource.gallery).then((image) {
       setState(() {
         _image = image;
@@ -189,7 +189,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   /// uploads file to firestore storage
-  Future<String> uploadFile(String uID) async {
+  Future<String> _uploadFile(String uID) async {
     StorageReference storageReference =
         FirebaseStorage.instance.ref().child('users/$uID');
     StorageUploadTask uploadTask = storageReference.putFile(_image);

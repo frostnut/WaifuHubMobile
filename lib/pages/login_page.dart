@@ -15,17 +15,17 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
-  TextEditingController emailInputController;
-  TextEditingController pwdInputController;
+  TextEditingController _emailInputController;
+  TextEditingController _pwdInputController;
 
   @override
   initState() {
-    emailInputController = new TextEditingController();
-    pwdInputController = new TextEditingController();
+    _emailInputController = new TextEditingController();
+    _pwdInputController = new TextEditingController();
     super.initState();
   }
 
-  String emailValidator(String value) {
+  String _emailValidator(String value) {
     Pattern pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     RegExp regex = new RegExp(pattern);
@@ -36,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  String pwdValidator(String value) {
+  String _pwdValidator(String value) {
     if (value.length < 8) {
       return 'Password must be longer than 8 characters';
     } else {
@@ -61,9 +61,9 @@ class _LoginPageState extends State<LoginPage> {
               children: <Widget>[
                 showLogo("assets/img/default.png"),
                 registrationTextFormField(
-                    'Email*', emailInputController, emailValidator, false),
+                    'Email*', _emailInputController, _emailValidator, false),
                 registrationTextFormField(
-                    "Password*", pwdInputController, pwdValidator, false),
+                    "Password*", _pwdInputController, _pwdValidator, true),
                 RaisedButton(
                   child: Text("Login"),
                   color: lightPinkColor,
@@ -72,8 +72,8 @@ class _LoginPageState extends State<LoginPage> {
                     if (_loginFormKey.currentState.validate()) {
                       FirebaseAuth.instance
                           .signInWithEmailAndPassword(
-                              email: emailInputController.text,
-                              password: pwdInputController.text)
+                              email: _emailInputController.text,
+                              password: _pwdInputController.text)
                           .then((currentUser) => Firestore.instance
                               .collection("users")
                               .document(currentUser.user.uid)

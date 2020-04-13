@@ -23,16 +23,16 @@ class HubCreatePage extends StatefulWidget {
 
 class _HubCreatePageState extends State<HubCreatePage> {
   final GlobalKey<FormState> _registerFormKey = GlobalKey<FormState>();
-  TextEditingController nameInputController;
-  TextEditingController descriptionInputController;
-  final firestoreInstance = Firestore.instance;
-  final databaseReference = FirebaseDatabase.instance.reference();
+  TextEditingController _nameInputController;
+  TextEditingController _descriptionInputController;
+  final _firestoreInstance = Firestore.instance;
+  final _databaseReference = FirebaseDatabase.instance.reference();
   File _image;
 
   @override
   initState() {
-    nameInputController = new TextEditingController();
-    descriptionInputController = new TextEditingController();
+    _nameInputController = new TextEditingController();
+    _descriptionInputController = new TextEditingController();
     super.initState();
   }
 
@@ -56,9 +56,9 @@ class _HubCreatePageState extends State<HubCreatePage> {
               children: <Widget>[
                 showLogo("assets/img/default2.png"),
                 registrationTextFormField(
-                    "Hub Name*", nameInputController, null, false),
+                    "Hub Name*", _nameInputController, null, false),
                 registrationTextFormField(
-                    "Hub Description*", descriptionInputController, null, false),
+                    "Hub Description*", _descriptionInputController, null, false),
                 Container(
                   height: 10,
                 ),
@@ -66,7 +66,7 @@ class _HubCreatePageState extends State<HubCreatePage> {
                   child: Text("Pick a hub pic"),
                   color: lightPinkColor,
                   textColor: Colors.white,
-                  onPressed: chooseFile,
+                  onPressed: _chooseFile,
                 ),
                 RaisedButton(
                   child: Text("Create a Hub"),
@@ -74,9 +74,9 @@ class _HubCreatePageState extends State<HubCreatePage> {
                   textColor: Colors.white,
                   onPressed: () {
                     _saveHub(
-                      databaseReference,
-                      nameInputController.text,
-                      descriptionInputController.text,
+                      _databaseReference,
+                      _nameInputController.text,
+                      _descriptionInputController.text,
                     ).then(
                       (_) => {
                         Navigator.pushAndRemoveUntil(
@@ -84,8 +84,8 @@ class _HubCreatePageState extends State<HubCreatePage> {
                             MaterialPageRoute(
                                 builder: (context) => SplashPage()),
                             (_) => false),
-                        nameInputController.clear(),
-                        descriptionInputController.clear(),
+                        _nameInputController.clear(),
+                        _descriptionInputController.clear(),
                       },
                     );
                   },
@@ -103,13 +103,13 @@ class _HubCreatePageState extends State<HubCreatePage> {
   Future<String> _saveHub(DatabaseReference databaseReference, String hubname,
       String description) async {
     var key = randomAlphaNumeric(30);
-    String picUrl = await uploadFile(key);
+    String picUrl = await _uploadFile(key);
     Hub newHub = new Hub(hubname: hubname, description: description);
-    newHub.createHub(firestoreInstance, key, hubname, description, picUrl);
+    newHub.createHub(_firestoreInstance, key, hubname, description, picUrl);
   }
 
   /// file picker from gallery
-  Future chooseFile() async {
+  Future _chooseFile() async {
     await ImagePicker.pickImage(source: ImageSource.gallery).then((image) {
       setState(() {
         _image = image;
@@ -118,7 +118,7 @@ class _HubCreatePageState extends State<HubCreatePage> {
   }
 
   /// uploads file to firestore storage
-  Future<String> uploadFile(String hubID) async {
+  Future<String> _uploadFile(String hubID) async {
     StorageReference storageReference =
         FirebaseStorage.instance.ref().child('hub/$hubID');
     StorageUploadTask uploadTask = storageReference.putFile(_image);
