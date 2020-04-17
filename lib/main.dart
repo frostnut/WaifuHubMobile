@@ -1,3 +1,5 @@
+import 'package:WaifuHub/pages/hub_comments_page.dart';
+
 import 'pages/splash_page.dart';
 import 'pages/register_page.dart';
 import 'pages/login_page.dart';
@@ -16,6 +18,7 @@ class SampleApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         HubDisplay.routeName: (context) => HubDisplay(),
+        CommentPage.routeName: (context) => CommentPage(),
         '/login': (BuildContext context) => LoginPage(),
         '/register': (BuildContext context) => RegisterPage(),
       },

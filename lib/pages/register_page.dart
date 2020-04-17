@@ -119,11 +119,11 @@ class _RegisterPageState extends State<RegisterPage> {
                                           Navigator.pushAndRemoveUntil(
                                               context,
                                               MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      BottomNavigationBarController(
-                                                        uid: currentUser
-                                                            .user.uid,
-                                                      )),
+                                                builder: (context) =>
+                                                    BottomNavigationBarController(
+                                                  uid: currentUser.user.uid,
+                                                ),
+                                              ),
                                               (_) => false),
                                           _usernameInputController.clear(),
                                           _emailInputController.clear(),

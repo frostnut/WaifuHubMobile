@@ -1,4 +1,5 @@
 import 'package:WaifuHub/global/assets.dart';
+import 'package:WaifuHub/pages/hub_comments_page.dart';
 import 'package:WaifuHub/util/hub_display_screen_arguments.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -74,7 +75,17 @@ class _HubDisplayState extends State<HubDisplay> {
                           icon: Icon(FontAwesomeIcons.comment),
                           iconSize: 25.0,
                           color: lightPinkColor,
-                          onPressed: () => Navigator.pop(context),
+                          onPressed: () => Navigator.pushNamed(
+                            context,
+                            CommentPage.routeName,
+                            arguments: HubDisplayScreenArguments(
+                              args.id,
+                              args.commentIDs,
+                              args.hubname,
+                              args.description,
+                              args.imageUrl,
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -129,7 +140,7 @@ class _HubDisplayState extends State<HubDisplay> {
                 ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
