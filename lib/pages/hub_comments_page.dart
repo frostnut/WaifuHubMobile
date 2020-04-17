@@ -23,7 +23,6 @@ class _CommentPageState extends State<CommentPage> {
   final GlobalKey<FormState> _commentFormKey = GlobalKey<FormState>();
   FirebaseUser _user;
   String _error;
-  List<Comment> _comments = [];
 
   /// sets current user
   void setUser(FirebaseUser user) {
@@ -41,15 +40,6 @@ class _CommentPageState extends State<CommentPage> {
     });
   }
 
-  /// calls the fetch comments and sets them in the
-  /// list of comments for this hub
-  void setComments() {
-    _fetchComments(widget.args.id);
-    setState(() {
-      _comments = _comments;
-    });
-  }
-
   void initState() {
     _controller.addListener(() {
       final text = _controller.text.toLowerCase();
@@ -60,7 +50,6 @@ class _CommentPageState extends State<CommentPage> {
         composing: TextRange.empty,
       );
     });
-    setComments();
     super.initState();
     FirebaseAuth.instance.currentUser().then(setUser).catchError(setError);
   }
@@ -74,7 +63,7 @@ class _CommentPageState extends State<CommentPage> {
         children: <Widget>[
           RaisedButton(
             child: Text("test"),
-            onPressed: () => _printComments(),
+            onPressed: () => {},
           ),
           Form(
             key: _commentFormKey,
@@ -95,22 +84,31 @@ class _CommentPageState extends State<CommentPage> {
                     }
                   },
                 ),
-                new ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: _comments.length,
-                  itemBuilder: (context, index) => new FutureBuilder(
-                    future: _fetchUserByComment(_comments[index]),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      if (snapshot.hasData) {
-                        return CommentCard(
-                          user: snapshot.data,
-                          comment: _comments[index],
-                        );
-                      } else {
-                        return CircularProgressIndicator();
-                      }
-                    },
-                  ),
+                FutureBuilder(
+                  future: _fetchComments(args.id),
+                  builder: (BuildContext context, AsyncSnapshot commentSnap) {
+                    return Container(
+                      height: 250,
+                      child: new ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: commentSnap.data.length,
+                        itemBuilder: (context, index) => new FutureBuilder(
+                          future: _fetchUserByComment(commentSnap.data[index]),
+                          builder:
+                              (BuildContext context, AsyncSnapshot userSnap) {
+                            if (userSnap.hasData) {
+                              return CommentCard(
+                                user: userSnap.data,
+                                comment: commentSnap.data[index],
+                              );
+                            } else {
+                              return CircularProgressIndicator();
+                            }
+                          },
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
@@ -121,8 +119,9 @@ class _CommentPageState extends State<CommentPage> {
   }
 
   /// fetches all comments for this hub as a stream
-  _fetchComments(String hubId) {
-    return Firestore.instance
+  Future<List<Comment>> _fetchComments(String hubId) {
+    var commentList = [];
+    Firestore.instance
         .collection("hubs")
         .document(hubId)
         .get()
@@ -143,18 +142,16 @@ class _CommentPageState extends State<CommentPage> {
               id: snapshot.data["id"],
               stamp: snapshot.data["stamp"],
             );
-            _comments.add(addComment);
+            commentList.add(addComment);
           }).asStream();
         }
+        return commentList;
       } catch (e) {
         print(e);
         return null;
       }
     }).asStream();
-  }
-
-  void _printComments() {
-    print(_comments);
+    return null;
   }
 
   /// method used to add comment to hub - needs to create the comment
