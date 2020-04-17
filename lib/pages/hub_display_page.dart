@@ -1,8 +1,9 @@
-import 'package:WaifuHub/global/assets.dart';
-import 'package:WaifuHub/pages/hub_comments_page.dart';
-import 'package:WaifuHub/util/hub_display_screen_arguments.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../global/assets.dart';
+import '../pages/hub_comments_page.dart';
+import '../util/hub_display_screen_arguments.dart';
 
 class HubDisplay extends StatefulWidget {
   static const routeName = '/hubdisplay';

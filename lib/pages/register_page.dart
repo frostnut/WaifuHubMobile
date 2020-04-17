@@ -1,15 +1,17 @@
-import 'package:WaifuHub/global/assets.dart';
-import 'package:WaifuHub/widgets/bottom_nav_bar.dart';
-import 'package:WaifuHub/widgets/show_logo.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import '../models/user.dart';
-import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
+import '../global/assets.dart';
+import '../models/user.dart';
+import '../widgets/bottom_nav_bar.dart';
 import '../widgets/registration_form_text_field.dart';
+import '../widgets/show_logo.dart';
 
 /// Register page handles logic for registering a user
 /// register a user requires a username, email, password

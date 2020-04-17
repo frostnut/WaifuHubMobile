@@ -1,7 +1,8 @@
-import 'package:WaifuHub/global/assets.dart';
-import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+
+import '../global/assets.dart';
 
 /// Account page displays user specific info
 /// Also contains the edit profile Icon button

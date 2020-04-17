@@ -1,15 +1,17 @@
-import 'package:WaifuHub/global/assets.dart';
-import 'package:WaifuHub/pages/splash_page.dart';
-import 'package:WaifuHub/widgets/show_logo.dart';
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import '../models/hub.dart';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
-import '../widgets/registration_form_text_field.dart';
 import 'package:random_string/random_string.dart';
+
+import '../global/assets.dart';
+import '../models/hub.dart';
+import '../pages/splash_page.dart';
+import '../widgets/registration_form_text_field.dart';
+import '../widgets/show_logo.dart';
 
 /// allows user to register a new hub
 /// much of the logic is repeated from register

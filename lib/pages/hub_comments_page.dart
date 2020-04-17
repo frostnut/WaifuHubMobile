@@ -1,13 +1,16 @@
-import 'package:WaifuHub/global/assets.dart';
-import 'package:WaifuHub/models/comment.dart';
-import 'package:WaifuHub/util/hub_display_screen_arguments.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../global/assets.dart';
+import '../models/comment.dart';
+import '../util/hub_display_screen_arguments.dart';
+
 class CommentPage extends StatefulWidget {
   static const routeName = '/comment';
-  CommentPage({Key key}) : super(key: key);
+  final HubDisplayScreenArguments args;
+
+  CommentPage(this.args);
 
   @override
   _CommentPageState createState() => _CommentPageState();
@@ -18,6 +21,7 @@ class _CommentPageState extends State<CommentPage> {
   final GlobalKey<FormState> _commentFormKey = GlobalKey<FormState>();
   FirebaseUser _user;
   String _error;
+  List<Comment> _comments = [];
 
   /// sets current user
   void setUser(FirebaseUser user) {
@@ -27,11 +31,20 @@ class _CommentPageState extends State<CommentPage> {
     });
   }
 
-  /// sets error if error fethcing user
+  /// sets error if error fetching user
   void setError(e) {
     setState(() {
       this._user = null;
       this._error = e.toString();
+    });
+  }
+
+  /// calls the fetch comments and sets them in the
+  /// list of comments for this hub
+  void setComments() {
+    _fetchComments(widget.args.id);
+    setState(() {
+      _comments = _comments;
     });
   }
 
@@ -45,6 +58,7 @@ class _CommentPageState extends State<CommentPage> {
         composing: TextRange.empty,
       );
     });
+    setComments();
     super.initState();
     FirebaseAuth.instance.currentUser().then(setUser).catchError(setError);
   }
@@ -58,7 +72,7 @@ class _CommentPageState extends State<CommentPage> {
         children: <Widget>[
           RaisedButton(
             child: Text("test"),
-            onPressed: () => _fetchComments(args.id),
+            onPressed: () => _printComments(),
           ),
           Form(
             key: _commentFormKey,
@@ -75,7 +89,7 @@ class _CommentPageState extends State<CommentPage> {
                   onPressed: () {
                     if (_commentFormKey.currentState.validate()) {
                       print("bump");
-                      _addComments(_controller.text, args.id, _user.uid);
+                      _addComment(_controller.text, args.id, _user.uid);
                     }
                   },
                 ),
@@ -87,6 +101,7 @@ class _CommentPageState extends State<CommentPage> {
     );
   }
 
+  /// fetches all comments for this hub as a stream
   _fetchComments(String hubId) {
     return Firestore.instance
         .collection("hubs")
@@ -95,8 +110,23 @@ class _CommentPageState extends State<CommentPage> {
         .then((snapshot) {
       try {
         var comments = snapshot.data["comments"];
-        print(comments);
-        print("ok");
+        for (String comment in comments) {
+          Firestore.instance
+              .collection("comments")
+              .document(comment)
+              .get()
+              .then((snapshot) {
+            Comment addComment = new Comment(
+              hubId: snapshot.data["hubId"],
+              userId: snapshot.data["userId"],
+              likes: snapshot.data["likes"],
+              text: snapshot.data["text"],
+              id: snapshot.data["id"],
+              stamp: snapshot.data["stamp"],
+            );
+            _comments.add(addComment);
+          }).asStream();
+        }
       } catch (e) {
         print(e);
         return null;
@@ -104,7 +134,13 @@ class _CommentPageState extends State<CommentPage> {
     }).asStream();
   }
 
-  _addComments(String text, String hubId, String userId) {
+  void _printComments() {
+    print(_comments);
+  }
+
+  /// method used to add comment to hub - needs to create the comment
+  /// and also update the hub to store the reference to the comment id
+  _addComment(String text, String hubId, String userId) {
     Comment comment = new Comment(
       hubId: hubId,
       text: text,

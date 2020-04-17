@@ -1,7 +1,8 @@
-import 'package:WaifuHub/widgets/bottom_nav_bar.dart';
-import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+
+import '../widgets/bottom_nav_bar.dart';
 
 /// depending on auth state either loads the app
 /// or takes user to login screen

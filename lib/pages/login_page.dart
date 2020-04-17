@@ -1,10 +1,11 @@
-import 'package:WaifuHub/global/assets.dart';
-import 'package:WaifuHub/widgets/registration_form_text_field.dart';
-import 'package:WaifuHub/widgets/show_logo.dart';
-import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+
+import '../global/assets.dart';
 import '../widgets/bottom_nav_bar.dart';
+import '../widgets/registration_form_text_field.dart';
+import '../widgets/show_logo.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);

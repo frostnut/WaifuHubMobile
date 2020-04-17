@@ -1,8 +1,9 @@
-import 'package:WaifuHub/global/assets.dart';
-import 'package:WaifuHub/models/hub.dart';
-import 'package:WaifuHub/widgets/hub_row.dart';
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+
+import '../global/assets.dart';
+import '../models/hub.dart';
+import '../widgets/hub_row.dart';
 
 /// Hubs is used to display all the user's hubs. This consists of the waifu
 /// hub cards that they follow. For info on the waifu cards see waifuRow widget.

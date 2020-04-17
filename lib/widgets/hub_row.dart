@@ -1,7 +1,8 @@
-import 'package:WaifuHub/global/assets.dart';
-import 'package:WaifuHub/pages/hub_display_page.dart';
 import 'package:flutter/material.dart';
-import 'package:WaifuHub/models/hub.dart';
+
+import '../global/assets.dart';
+import '../models/hub.dart';
+import '../pages/hub_display_page.dart';
 import '../util/hub_display_screen_arguments.dart';
 
 // used to put space between objects
