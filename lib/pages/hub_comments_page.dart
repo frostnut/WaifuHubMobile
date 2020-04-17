@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 
 import '../global/assets.dart';
 import '../models/comment.dart';
+import '../models/user.dart';
 import '../util/hub_display_screen_arguments.dart';
+import '../widgets/comment_card.dart';
 
 class CommentPage extends StatefulWidget {
   static const routeName = '/comment';
@@ -93,6 +95,23 @@ class _CommentPageState extends State<CommentPage> {
                     }
                   },
                 ),
+                new ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: _comments.length,
+                  itemBuilder: (context, index) => new FutureBuilder(
+                    future: _fetchUserByComment(_comments[index]),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        return CommentCard(
+                          user: snapshot.data,
+                          comment: _comments[index],
+                        );
+                      } else {
+                        return CircularProgressIndicator();
+                      }
+                    },
+                  ),
+                ),
               ],
             ),
           ),
@@ -152,5 +171,23 @@ class _CommentPageState extends State<CommentPage> {
         .collection("hubs")
         .document(hubId)
         .updateData({"comments": FieldValue.arrayUnion(newComments)});
+  }
+
+  Future<User> _fetchUserByComment(Comment comment) async {
+    DocumentSnapshot ds = await Firestore.instance
+        .collection('comments')
+        .document(comment.id)
+        .get();
+    String userId = ds.data["userId"];
+    DocumentSnapshot userDs =
+        await Firestore.instance.collection('users').document(userId).get();
+    return new User(
+        profPicUrl: userDs.data["profPicUrl"],
+        apiKey: userDs.data["apiKey"],
+        email: userDs.data["email"],
+        hubIDs: userDs.data["hubIDs"],
+        username: userDs.data["username"],
+        userID: userDs.data["userID"],
+        status: userDs.data["status"]);
   }
 }
