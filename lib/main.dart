@@ -24,7 +24,8 @@ class SampleApp extends StatelessWidget {
           CommentPage.routeName: (ctx) => CommentPage(settings.arguments),
         };
         WidgetBuilder builder = routes[settings.name];
-        return MaterialPageRoute(builder: (ctx) => builder(ctx));
+        return MaterialPageRoute(
+            settings: settings, builder: (ctx) => builder(ctx));
       },
       routes: {
         HubDisplay.routeName: (context) => HubDisplay(),

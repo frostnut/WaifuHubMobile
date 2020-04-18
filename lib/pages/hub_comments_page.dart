@@ -56,8 +56,7 @@ class _CommentPageState extends State<CommentPage> {
 
   @override
   Widget build(BuildContext context) {
-    final HubDisplayScreenArguments args =
-        ModalRoute.of(context).settings.arguments;
+    HubDisplayScreenArguments args = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       body: Column(
         children: <Widget>[
