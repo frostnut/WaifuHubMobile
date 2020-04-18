@@ -90,7 +90,7 @@ class _CommentPageState extends State<CommentPage> {
                       height: 250,
                       child: new ListView.builder(
                         shrinkWrap: true,
-                        itemCount: commentSnap.data.length,
+                        itemCount: 6,
                         itemBuilder: (context, index) => new FutureBuilder(
                           future: _fetchUserByComment(commentSnap.data[index]),
                           builder:
@@ -118,39 +118,28 @@ class _CommentPageState extends State<CommentPage> {
   }
 
   /// fetches all comments for this hub as a stream
-  Future<List<Comment>> _fetchComments(String hubId) {
+  Future<List<Comment>> _fetchComments(String hubId) async {
     var commentList = [];
-    Firestore.instance
-        .collection("hubs")
-        .document(hubId)
-        .get()
-        .then((snapshot) {
-      try {
-        var comments = snapshot.data["comments"];
-        for (String comment in comments) {
-          Firestore.instance
-              .collection("comments")
-              .document(comment)
-              .get()
-              .then((snapshot) {
-            Comment addComment = new Comment(
-              hubId: snapshot.data["hubId"],
-              userId: snapshot.data["userId"],
-              likes: snapshot.data["likes"],
-              text: snapshot.data["text"],
-              id: snapshot.data["id"],
-              stamp: snapshot.data["stamp"],
-            );
-            commentList.add(addComment);
-          }).asStream();
-        }
-        return commentList;
-      } catch (e) {
-        print(e);
-        return null;
-      }
-    }).asStream();
-    return null;
+    DocumentSnapshot hubSnap =
+        await Firestore.instance.collection("hubs").document(hubId).get();
+    var comments = hubSnap.data["comments"];
+    for (String comment in comments) {
+      DocumentSnapshot commentSnap = await Firestore.instance
+          .collection("comments")
+          .document(comment)
+          .get();
+
+      Comment addComment = new Comment(
+        hubId: commentSnap.data["hubId"],
+        userId: commentSnap.data["userId"],
+        likes: commentSnap.data["likes"],
+        text: commentSnap.data["text"],
+        id: commentSnap.data["id"],
+        stamp: commentSnap.data["stamp"],
+      );
+      commentList.add(addComment);
+    }
+    return (commentList != null) ? commentList : null;
   }
 
   /// method used to add comment to hub - needs to create the comment
