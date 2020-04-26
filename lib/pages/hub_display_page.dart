@@ -92,11 +92,24 @@ class _HubDisplayState extends State<HubDisplay> {
                     ),
                     Row(
                       children: <Widget>[
-                        IconButton(
-                          icon: Icon(Icons.thumb_up),
-                          iconSize: 30.0,
-                          color: lightPinkColor,
-                          onPressed: () => _likePage(args.id),
+                        FutureBuilder(
+                          future: _alreadyLiked(args.id),
+                          builder:
+                              (BuildContext context, AsyncSnapshot snapshot) {
+                            return (snapshot.data
+                                ? (IconButton(
+                                    icon: Icon(Icons.thumb_up),
+                                    iconSize: 30.0,
+                                    color: lightPinkColor,
+                                    onPressed: () => _likePage(args.id),
+                                  ))
+                                : IconButton(
+                                    icon: Icon(Icons.thumb_down),
+                                    iconSize: 30.0,
+                                    color: lightPinkColor,
+                                    onPressed: () => _unlikePage(args.id),
+                                  ));
+                          },
                         ),
                         IconButton(
                           icon: Icon(FontAwesomeIcons.comment),
@@ -199,7 +212,7 @@ class _HubDisplayState extends State<HubDisplay> {
         .updateData({"hubIDs": FieldValue.arrayUnion(newHub)});
   }
 
-  /// handles logic to unlike a page, decrements the 
+  /// handles logic to unlike a page, decrements the
   /// likes and unfollows user from the page
   void _unlikePage(String hubId) async {
     DocumentSnapshot snap =
@@ -220,5 +233,12 @@ class _HubDisplayState extends State<HubDisplay> {
         .collection("users")
         .document(_user.uid)
         .updateData({"hubIDs": FieldValue.arrayRemove(removeHub)});
+  }
+
+  Future<bool> _alreadyLiked(String hubId) async {
+    DocumentSnapshot userSnap =
+        await Firestore.instance.collection("users").document(_user.uid).get();
+    List<dynamic> hubIds = userSnap.data["hubIDs"];
+    return (hubIds.contains(hubId) ? true : false);
   }
 }
